@@ -12,4 +12,12 @@ class GavTest {
 
         assertEquals("org.acme", gav.getGroup());
     }
+    @Test
+    void shouldParseAnotherGav() {
+        Gav gav = Gav.parse("org.other:lib-c:3.0.0");
+
+        assertEquals("org.other", gav.getGroup());
+        assertEquals("lib-c", gav.getArtifact());
+        assertEquals("3.0.0", gav.getVersion());
+    }
 }
