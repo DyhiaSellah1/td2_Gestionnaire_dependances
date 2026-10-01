@@ -1,20 +1,38 @@
 package org.acme;
 
-import java.util.HashMap;
-import java.util.Map;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import java.util.Optional;
 
-public class InMemoryStorage implements IStorage {
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-    private final Map<String, Artifact> artifacts = new HashMap<>();
+class InMemoryStorageTest {
 
-    @Override
-    public void put(Artifact artifact) {
-        artifacts.put(artifact.getCoordinate(), artifact);
+    private IStorage storage;
+
+    @BeforeEach
+    void init() {
+        storage = new InMemoryStorage();
     }
 
-    @Override
-    public Optional<Artifact> get(String coordinate) {
-        return Optional.ofNullable(artifacts.get(coordinate));
+    @Test
+    void shouldStoreAndGetArtifact() {
+        Artifact artifact = new Artifact("org.acme", "lib-a", "1.0.0");
+
+        storage.put(artifact);
+
+        assertEquals(
+                artifact,
+                storage.get("org.acme:lib-a:1.0.0").orElseThrow()
+        );
+    }
+
+    @Test
+    void shouldReturnEmptyWhenArtifactDoesNotExist() {
+        assertEquals(
+                Optional.empty(),
+                storage.get("org.acme:unknown:1.0.0")
+        );
     }
 }
