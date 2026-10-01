@@ -1,3 +1,5 @@
+import org.gradle.kotlin.dsl.testImplementation
+
 plugins {
     id("java")
     id("jacoco")
@@ -21,6 +23,8 @@ dependencies {
 
     // Mockito
     testImplementation("org.mockito:mockito-core:5.12.0")
+
+
 }
 
 tasks.test {
