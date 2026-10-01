@@ -3,16 +3,30 @@ package org.acme;
 public class Gav {
 
     private String group;
+    private String artifact;
+    private String version;
 
-    private Gav(String group) {
+    private Gav(String group, String artifact, String version) {
         this.group = group;
+        this.artifact = artifact;
+        this.version = version;
     }
 
     public static Gav parse(String coordinate) {
-        return new Gav("org.acme");
+        String[] parts = coordinate.split(":");
+
+        return new Gav(parts[0], parts[1], parts[2]);
     }
 
     public String getGroup() {
         return group;
+    }
+
+    public String getArtifact() {
+        return artifact;
+    }
+
+    public String getVersion() {
+        return version;
     }
 }
